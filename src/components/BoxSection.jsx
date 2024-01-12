@@ -1,8 +1,14 @@
 import NoteCard from "./NoteCard"
 import { items } from "../data.js"
+import { useState } from "react"
+import AddItem from "./AddItem.jsx"
 
 export default function BoxSection(){
-    console.log(items)
+    const [add , setAdd] = useState(false)
+    const handleInput = () =>{
+        setAdd(true)
+    }
+
     return(
         <section>
            <ul>
@@ -13,6 +19,7 @@ export default function BoxSection(){
                     </li>
                 )
               })}
+              {add == false ? <button onClick={handleInput} className="add-item-button">Add Item</button> : <AddItem />}
            </ul> 
         </section>
     )
