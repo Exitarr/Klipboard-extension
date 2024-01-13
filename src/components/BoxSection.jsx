@@ -3,8 +3,10 @@ import { items } from "../data.js"
 import { useState } from "react"
 import AddItem from "./AddItem.jsx"
 
-export default function BoxSection(){
+export default function BoxSection({handleModal}){
+    
     const [add , setAdd] = useState(false)
+     
     const handleInput = () =>{
         setAdd(true)
     }
@@ -14,12 +16,12 @@ export default function BoxSection(){
            <ul>
               {items.map(item => {
                 return(
-                    <li key={item.id}>
-                        <NoteCard title={item.title} text={item.content}/>
+                    <li key={item.id} >
+                        <NoteCard id = {item.id} title={item.title} text={item.content}/>
                     </li>
                 )
               })}
-              {add == false ? <button onClick={handleInput} className="add-item-button">Add Item</button> : <AddItem />}
+              {add == false ? <button onClick={handleModal} className="add-item-button">Add Item</button> : <AddItem />}
            </ul> 
         </section>
     )
