@@ -1,25 +1,17 @@
 import Header from "./components/Header"
-import Modal from "./components/Modal"
-import ModalCard from "./components/ModalCard"
 import BoxSection from "./components/boxSection"
-import { useState } from "react"
+import Footer from "./components/Footer"
+import ListContextProvider from "./store/list-context"
 
 
 function App() {
-  const [openModal, setOpenModal] = useState(false)
-
-  function handleModal() {
-    setOpenModal(true)
-  }
 
   return (
-    <>
-      <Modal open = {openModal}>
-        <ModalCard />
-      </Modal>
+    <ListContextProvider >
       <Header />
-      <BoxSection handleModal = {handleModal}/>
-    </>
+      <BoxSection/>
+      <Footer />
+    </ListContextProvider>
   )
 }
 

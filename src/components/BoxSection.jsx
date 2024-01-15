@@ -1,27 +1,29 @@
-import NoteCard from "./NoteCard"
-import { items } from "../data.js"
-import { useState } from "react"
+import { useState , useContext } from "react"
+import { ListContext } from "../store/list-context"
 import AddItem from "./AddItem.jsx"
+import NoteCard from "./NoteCard.jsx"
 
-export default function BoxSection({handleModal}){
+export default function BoxSection(){
     
-    const [add , setAdd] = useState(false)
-     
+    const {items} = useContext(ListContext)
+    
+    const [add , setAdd] = useState(false) 
     const handleInput = () =>{
         setAdd(true)
     }
 
+
     return(
-        <section>
+        <section id="box">
            <ul>
               {items.map(item => {
                 return(
                     <li key={item.id} >
-                        <NoteCard id = {item.id} title={item.title} text={item.content}/>
+                        <NoteCard item = {item} />
                     </li>
                 )
               })}
-              {add == false ? <button onClick={handleModal} className="add-item-button">Add Item</button> : <AddItem />}
+              {add == false ? <button onClick={handleInput} className="add-item-button">Add Item</button> : <AddItem setAdd={setAdd} />}
            </ul> 
         </section>
     )
