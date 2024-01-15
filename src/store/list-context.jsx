@@ -1,5 +1,6 @@
-import { createContext, useState } from "react";
-import { items } from "../data";
+import { createContext, useEffect, useState } from "react";
+
+var items = [];
 
 export const ListContext = createContext({
     items : items,
@@ -8,18 +9,27 @@ export const ListContext = createContext({
 })
 
 export default function ListContextProvider({children}){
+    
     const [currItems , setItems] = useState(items)
-
+    
+      
+    items = JSON.parse(localStorage.getItem("myDataStorage"));
+    items = items === null ? [] : items;
+      
 
     const ctxValue = {
         items : currItems,
         onUpdate : handleSubmit,
         onDelete : handleDelete
-    }   
+    }  
+    
+    function addtoStorage(){    
+        localStorage.setItem('myDataStorage', JSON.stringify(items));
+    }
 
     function handleSubmit(task){
-        const idx = currItems.findIndex(item => item.id === task.id);
-        if(idx === -1){
+        if(items.length > 0) var idx = currItems.findIndex(item => item.id === task.id);
+        if(idx === -1 || items.length === 0){
             const newItem = {
                 id : items.length + 1,
                 title : task.title,
@@ -37,6 +47,7 @@ export default function ListContextProvider({children}){
                 return updatedItems;
             });
         }
+        addtoStorage()
     }
 
     function handleDelete(taskId){
@@ -44,6 +55,7 @@ export default function ListContextProvider({children}){
             const updatedItems = prev.filter((item) => item.id !== taskId);
             return updatedItems;
         });
+        addtoStorage()
     }
 
 

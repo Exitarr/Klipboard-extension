@@ -30,7 +30,7 @@ export default function NoteCard({ item }){
 
     return (
         <>
-         {
+         {  
             <section id="content" onClick={handleShow}>
                 <section id="Card-Header">
                         <h2>{item.title}</h2>
