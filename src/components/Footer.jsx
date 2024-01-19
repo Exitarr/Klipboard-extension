@@ -1,4 +1,4 @@
-import React from 'react';
+import { ImGithub } from "react-icons/im";
 
 export default function Footer() {
     const handleRedirect = () => {
@@ -9,8 +9,8 @@ export default function Footer() {
     <footer>
       <p>
         Created by{' '}
-        <button type="button" onClick={handleRedirect}>
-          Exitarr
+        <button type="button" onClick={handleRedirect} className="github-button">
+        <ImGithub />
         </button>
       </p>
     </footer>
