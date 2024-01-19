@@ -13,8 +13,7 @@ export default function NoteCard({ item }){
     }
     
     const handleRedirect = (e) => {
-        e.stopPropagation()
-        window.location.replace("https://bobbyhadz.com/blog/react-redirect-to-external-url#redirect-to-an-external-url-in-reactjs");
+        e.stopPropagation();
     };
 
     function handleEdit(e){
@@ -34,7 +33,7 @@ export default function NoteCard({ item }){
             <section id="content" onClick={handleShow}>
                 <section id="Card-Header">
                         <h2>{item.title}</h2>
-                        {show &&  <CardButtons id={item.id} handleEdit={handleEdit} onRedirect = {handleRedirect} />}
+                        {show &&  <CardButtons item={item} handleEdit={handleEdit} onRedirect = {handleRedirect} />}
                 </section>
                 <p className={`note ${show ? "show" : ""} `} ref={editRef} contentEditable={isEditing} suppressContentEditableWarning={true}>
                     {item.content}

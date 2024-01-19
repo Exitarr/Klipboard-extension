@@ -1,7 +1,18 @@
+import React from 'react';
+
 export default function Footer() {
-    return (
-        <footer>
-            <p>Created by <a href="https://github.com/Exitarr">Exitarr</a></p>
-        </footer>
-    )    
+    const handleRedirect = () => {
+        const redirectUrl = 'https://github.com/exitarr'; 
+        chrome.tabs.create({ url: redirectUrl });
+      };
+  return (
+    <footer>
+      <p>
+        Created by{' '}
+        <button type="button" onClick={handleRedirect}>
+          Exitarr
+        </button>
+      </p>
+    </footer>
+  );
 }

@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "version": "1.0.0",
+    "name": "Klipboard",
+    "action" :
+    {
+        "default_popup": "index.html",
+        "default_icon": "notepad.png"
+    },
+    "permissions": [
+        "activeTab",
+        "tabs"
+    ],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "icons": {
+        "32": "notepad.png"
+    }
+}

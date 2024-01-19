@@ -4,7 +4,8 @@ import { createContext, useEffect, useState } from "react";
 export const ListContext = createContext({
     items : [],
     onUpdate : (task) => {},
-    onDelete : (taskId) => {}
+    onDelete : (taskId) => {},
+    onSearch : (taskUrl) => {}
 })
 
 export default function ListContextProvider({children}){
@@ -19,7 +20,8 @@ export default function ListContextProvider({children}){
     const ctxValue = {
         items : currItems,
         onUpdate : handleSubmit,
-        onDelete : handleDelete
+        onDelete : handleDelete,
+        onSearch : handleSearch
     }  
     
     function addtoStorage(){    
@@ -31,21 +33,23 @@ export default function ListContextProvider({children}){
         addtoStorage();
     }, [currItems]);
 
-//   const handleCopy = () => {
-//     // Get the currently selected text
-//     const selection = window.getSelection();
-//     setSelectedText(selection.toString());
-//     const link = `${window.location.href}#${selection}`;
-//   };
+    
+    async function getCurrentTab() {
+        let queryOptions = { active: true, lastFocusedWindow: true };
+        let [tab] = await chrome.tabs.query(queryOptions);
+        return tab;
+    }
 
-    function handleSubmit(task){
+    async function handleSubmit(task){
         if(items.length > 0) var idx = currItems.findIndex(item => item.id === task.id);
         if(idx === -1 || items.length === 0){
+            const tab = await getCurrentTab()
+            console.log(tab)
             const newItem = {
                 id : items.length + 1,
                 title : task.title,
                 content : task.content,
-                url : "https://www.youtube.com/"
+                url : tab.url
             }
             setItems((prev) => {
                 return [...prev , newItem]
@@ -65,6 +69,11 @@ export default function ListContextProvider({children}){
             const updatedItems = prev.filter((item) => item.id !== taskId);
             return updatedItems;
         });
+    }
+
+    function handleSearch(taskUrl){
+        const redirectUrl = taskUrl
+        chrome.tabs.create({ url: redirectUrl });
     }
 
 

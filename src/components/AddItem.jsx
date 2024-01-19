@@ -7,7 +7,6 @@ export default function AddItem({setAdd}) {
     const { onUpdate } = useContext(ListContext);
 
     function handleSubmit() {
-        
         const task = {
             id : -1,
             title: titleRef.current.value,
