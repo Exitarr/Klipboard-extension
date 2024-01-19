@@ -1,20 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 
-var items = [];
 
 export const ListContext = createContext({
-    items : items,
+    items : [],
     onUpdate : (task) => {},
     onDelete : (taskId) => {}
 })
 
 export default function ListContextProvider({children}){
     
+
+    let items = localStorage.getItem("myDataStorage");
+    if(items) items = JSON.parse(items);
+    else items = [];
     const [currItems , setItems] = useState(items)
-    
-      
-    items = JSON.parse(localStorage.getItem("myDataStorage"));
-    items = items === null ? [] : items;
       
 
     const ctxValue = {
@@ -24,8 +23,20 @@ export default function ListContextProvider({children}){
     }  
     
     function addtoStorage(){    
-        localStorage.setItem('myDataStorage', JSON.stringify(items));
+        localStorage.setItem('myDataStorage', JSON.stringify(currItems));
     }
+    const [selectedText, setSelectedText] = useState('');
+
+    useEffect(() => {
+        addtoStorage();
+    }, [currItems]);
+
+//   const handleCopy = () => {
+//     // Get the currently selected text
+//     const selection = window.getSelection();
+//     setSelectedText(selection.toString());
+//     const link = `${window.location.href}#${selection}`;
+//   };
 
     function handleSubmit(task){
         if(items.length > 0) var idx = currItems.findIndex(item => item.id === task.id);
@@ -47,7 +58,6 @@ export default function ListContextProvider({children}){
                 return updatedItems;
             });
         }
-        addtoStorage()
     }
 
     function handleDelete(taskId){
@@ -55,7 +65,6 @@ export default function ListContextProvider({children}){
             const updatedItems = prev.filter((item) => item.id !== taskId);
             return updatedItems;
         });
-        addtoStorage()
     }
 
 
